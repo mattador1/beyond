@@ -1,6 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { GetResponse, GetUserResponse } from "../models/types";
+import {
+  topInfluencerPerCategoryByFollowers,
+  topInfluencerPerCountryByEngagementAvg,
+} from "../queries/user";
 
 const Home = () => {
   const [error, setError] = useState("");
@@ -34,6 +38,12 @@ const Home = () => {
       setError(response.error);
     } else if (response.data.users !== null) {
       // do processing
+      const topByCat = topInfluencerPerCategoryByFollowers(response.data.users);
+      const topByCountry = topInfluencerPerCountryByEngagementAvg(
+        response.data.users
+      );
+
+      console.log(topByCountry);
     } else {
       throw new Error("Invalid data");
     }

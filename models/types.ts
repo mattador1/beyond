@@ -31,3 +31,13 @@ export interface Success<Data extends Record<string, any>> {
 export type GetResponse<Data extends Record<string, any>> =
   | Success<Data>
   | ErrorMessage;
+
+export interface filterPerCategoryByFollowers {
+  category: string;
+  user: User;
+}
+
+export interface filterPerCountryByFollowers {
+  country: string;
+  user: User;
+}
