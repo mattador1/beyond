@@ -1,5 +1,6 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
+import DataTable from "../components/user-table";
 import {
   filterPerCategoryByFollowers,
   filterPerCountryByFollowers,
@@ -13,6 +14,8 @@ import {
 
 const Home = () => {
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+
   const [topPerCategoryByFollowers, setTopPerCategoryByFollowers] = useState<
     filterPerCategoryByFollowers[]
   >([]);
@@ -53,7 +56,6 @@ const Home = () => {
       const topByCountry = topInfluencerPerCountryByEngagementAvg(
         response.data.users
       );
-
       setTopPerCategoryByFollowers(topByCat);
       setTopPerCountryByEngagementAvg(topByCountry);
     } else {
@@ -64,15 +66,30 @@ const Home = () => {
   useEffect(() => {
     loadData()
       .then(() => {
-        // loaded into state
+        setIsLoading(false);
       })
       .catch((err) => {
-        // error handle
+        setIsLoading(false);
+        setError(err.message);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <div>Home Page</div>;
+  return (
+    <div style={{ width: "70%", margin: "auto auto" }}>
+      {isLoading && <h3>Loading!!!</h3>}
+      {!isLoading && !error && (
+        <Fragment>
+          <h1>Users per Category by Followers</h1>
+          <DataTable data={topPerCategoryByFollowers} />
+          <h1>Users per Country by Engagement Average</h1>
+          <DataTable data={topPerCountryByEngagementAvg} />
+        </Fragment>
+      )}
+
+      <h3>{error}</h3>
+    </div>
+  );
 };
 
 export default Home;

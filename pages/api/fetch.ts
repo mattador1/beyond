@@ -22,9 +22,9 @@ export default async function handler(
 
     const user = parseValues(parseUserKeys);
 
-    console.log(user);
     res.status(200).json({ users: user });
   } catch (err) {
+    console.log(err);
     res.status(500).json({ users: null });
   }
 }

@@ -41,3 +41,7 @@ export interface filterPerCountryByFollowers {
   country: string;
   user: User;
 }
+
+export type QueryData =
+  | filterPerCategoryByFollowers[]
+  | filterPerCountryByFollowers[];
