@@ -1,34 +1,33 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
 ## Getting Started
 
-First, run the development server:
+First do npm install to download dependecies
+
+```bash
+npm install
+```
+
+After, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Assumptions
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+- N/A or empty field was also talken into consideration if those fields are country or category (example: "" as category was used to calculate top inflencer)
+- Numbers are in 2.3M or 1.3K or 40 format
+- Parsing of numbers were done but were not reverted back to 1.4M style. Tables show full view of users with all data, not only associated name
+- When estimating top influencer per category we take into account both Category1 and Category2
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Next steps
 
-## Learn More
+- Would be good to be more generic, so that there is possibility for every CSV data source with defined headers to be able to perform queries and get top statistics for any column (any column which will be added in the future)
+- So for example get top user per X by Y, assuming that statement make sense depending on data.
+- This could be done more like moving through the matrix, with i, j indexes as positions, user would input X and Y as named header we would mapped them as j (column positions) and then perform calculation. Prior to calculating data should be parsed but this can be also done if we know what data represents and that in the future will be consistent.
 
-To learn more about Next.js, take a look at the following resources:
+## Step after next step
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- 10x or 100x data muliple? - I would say that we would need to start streaming data and processing them in chunks so that once we find top user, we do a snapshot and compare with new chunk which arrived.
+- Increasing it even further we should be thinking of processing it on database level or apply some message broker to help us with the load and to start creating optimized data structures in specific databases for fast queries.
