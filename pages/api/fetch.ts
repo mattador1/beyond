@@ -1,10 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import csv from "csvtojson";
 import path from "path";
+import { GetUserResponse } from "../../models/types";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse<GetUserResponse>
 ) {
   const filePath = path.join(
     __dirname,
@@ -16,5 +17,5 @@ export default async function handler(
 
   console.log(jsonObject);
 
-  res.status(200).json({});
+  res.status(200).json({ users: null });
 }
