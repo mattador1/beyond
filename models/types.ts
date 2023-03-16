@@ -17,3 +17,17 @@ export interface User {
 export interface GetUserResponse {
   users: User[] | null;
 }
+
+export interface ErrorMessage {
+  data: undefined;
+  error: string;
+}
+
+export interface Success<Data extends Record<string, any>> {
+  data: Data;
+  error: undefined;
+}
+
+export type GetResponse<Data extends Record<string, any>> =
+  | Success<Data>
+  | ErrorMessage;
