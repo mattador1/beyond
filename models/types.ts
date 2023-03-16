@@ -1,3 +1,8 @@
+import { mappingFields } from "./user";
+
+export type UserRawValues = {
+  [K in keyof typeof mappingFields]: string;
+};
 export interface User {
   instaUser: string;
   instaName: string;

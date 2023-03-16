@@ -1,11 +1,10 @@
 import axios from "axios";
 import { useEffect } from "react";
+import { parseKeys } from "../models/user";
 
 const Home = () => {
   const fetch = async () => {
     const response = await axios.get("/api/fetch");
-
-    console.log(response.data);
   };
 
   useEffect(() => {

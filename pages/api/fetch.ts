@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import csv from "csvtojson";
 import path from "path";
 import { GetUserResponse } from "../../models/types";
+import { parseKeys, parseValues } from "../../models/user";
 
 export default async function handler(
   req: NextApiRequest,
@@ -13,9 +14,17 @@ export default async function handler(
     "data",
     "instagram_influencers.csv"
   );
-  const jsonObject = await csv().fromFile(filePath);
 
-  console.log(jsonObject);
+  try {
+    const jsonObject = await csv().fromFile(filePath);
 
-  res.status(200).json({ users: null });
+    const parseUserKeys = parseKeys(jsonObject);
+
+    const user = parseValues(parseUserKeys);
+
+    console.log(user);
+    res.status(200).json({ users: user });
+  } catch (err) {
+    res.status(500).json({ users: null });
+  }
 }
