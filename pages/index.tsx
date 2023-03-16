@@ -1,6 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { GetResponse, GetUserResponse } from "../models/types";
+import {
+  filterPerCategoryByFollowers,
+  filterPerCountryByFollowers,
+  GetResponse,
+  GetUserResponse,
+} from "../models/types";
 import {
   topInfluencerPerCategoryByFollowers,
   topInfluencerPerCountryByEngagementAvg,
@@ -8,6 +13,12 @@ import {
 
 const Home = () => {
   const [error, setError] = useState("");
+  const [topPerCategoryByFollowers, setTopPerCategoryByFollowers] = useState<
+    filterPerCategoryByFollowers[]
+  >([]);
+  const [topPerCountryByEngagementAvg, setTopPerCountryByEngagementAvg] =
+    useState<filterPerCountryByFollowers[]>([]);
+
   const fetch = async <Data extends Record<string, any>>(): Promise<
     GetResponse<Data>
   > => {
@@ -43,7 +54,8 @@ const Home = () => {
         response.data.users
       );
 
-      console.log(topByCountry);
+      setTopPerCategoryByFollowers(topByCat);
+      setTopPerCountryByEngagementAvg(topByCountry);
     } else {
       throw new Error("Invalid data");
     }
